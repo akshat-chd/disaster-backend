@@ -35,9 +35,14 @@ def handle_preflight():
 def after_request(response):
     response.headers.set('Access-Control-Allow-Origin', FRONTEND_URL)
     response.headers.set('Access-Control-Allow-Credentials', 'true')
+    response.headers.set('Access-Control-Allow-Headers', 'Content-Type')
+    response.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
     return response
 
 app.config['SECRET_KEY'] = 'a_very_secret_key_change_this_later' 
+app.config['SESSION_COOKIE_SAMESITE'] = 'None'
+app.config['SESSION_COOKIE_SECURE'] = True
+
 # Use DATABASE_URL from Render
 DATABASE_URL = os.getenv("DATABASE_URL")
 

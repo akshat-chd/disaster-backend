@@ -37,9 +37,16 @@ def after_request(response):
     return response
 
 app.config['SECRET_KEY'] = 'a_very_secret_key_change_this_later' 
-basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'users.db')
+# Use DATABASE_URL from Render
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+# Render supplies URLs starting with "postgres://", SQLAlchemy needs "postgresql://"
+if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)

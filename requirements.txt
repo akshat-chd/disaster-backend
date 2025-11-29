@@ -11,6 +11,8 @@ Flask-Bcrypt==1.0.1
 flask-cors==6.0.1
 Flask-Login==0.6.3
 Flask-SQLAlchemy==3.1.1
+geographiclib==2.1
+geopy==2.4.1
 gunicorn==23.0.0
 h11==0.16.0
 idna==3.11
@@ -21,6 +23,7 @@ MarkupSafe==3.0.3
 numpy==2.3.3
 packaging==25.0
 pandas==2.3.3
+psycopg2-binary==2.9.11
 pydantic==2.12.2
 pydantic_core==2.41.4
 python-dateutil==2.9.0.post0

@@ -18,13 +18,14 @@ from geopy.geocoders import Nominatim
 
 # --- 1. Initialize App and Config ---
 app = Flask(__name__)
+FRONTEND_URL = "https://disasteriq-frontend.onrender.com"
 
 # --- Manual CORS Handling (Fixes 403 Errors) ---
 @app.before_request
 def handle_preflight():
     if request.method == "OPTIONS":
         res = make_response()
-        res.headers.set('Access-Control-Allow-Origin', 'http://localhost:5173')
+        res.headers.set('Access-Control-Allow-Origin', FRONTEND_URL)
         res.headers.set('Access-Control-Allow-Headers', 'Content-Type')
         res.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
         res.headers.set('Access-Control-Allow-Credentials', 'true')
@@ -32,7 +33,7 @@ def handle_preflight():
 
 @app.after_request
 def after_request(response):
-    response.headers.set('Access-Control-Allow-Origin', 'http://localhost:5173')
+    response.headers.set('Access-Control-Allow-Origin', FRONTEND_URL)
     response.headers.set('Access-Control-Allow-Credentials', 'true')
     return response
 

@@ -6,6 +6,8 @@ from datetime import datetime, timedelta
 import os
 import ssl
 import certifi
+from flask import session
+
 
 # --- Import extensions ---
 from flask_sqlalchemy import SQLAlchemy
@@ -42,7 +44,7 @@ def after_request(response):
 app.config['SECRET_KEY'] = 'a_very_secret_key_change_this_later' 
 app.config['SESSION_COOKIE_SAMESITE'] = 'None'
 app.config['SESSION_COOKIE_SECURE'] = True
-
+app.config['SESSION_COOKIE_HTTPONLY'] = True
 # Use DATABASE_URL from Render
 DATABASE_URL = os.getenv("DATABASE_URL")
 
@@ -191,6 +193,10 @@ def logout():
 @login_required
 def get_current_user():
     return jsonify({"id": current_user.id, "username": current_user.username})
+
+@app.route("/healthz")
+def health_check():
+    return "OK", 200
 
 # --- Helper to process predictions ---
 def process_prediction(lat, lon, location_name, found_name):

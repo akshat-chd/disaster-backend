@@ -230,14 +230,14 @@ def process_prediction(lat, lon, location_name, found_name):
 
 # Route 1: Predict by Lat/Lon (GPS)
 @app.route('/predict', methods=['POST'])
-@login_required 
+
 def predict_geo():
     d = request.get_json()
     return process_prediction(d['latitude'], d['longitude'], "GPS Location", "Your Coordinates")
 
 # Route 2: Predict by Name (Search)
 @app.route('/predict_by_name', methods=['POST'])
-@login_required
+
 def predict_name():
     name = request.get_json()['location_name']
     # Uses the SSL-fixed geolocator
